@@ -37,13 +37,19 @@ namespace BootCamp.Chapter
         /// </summary>
         public static string Build(string message, int padding)
         {
-            if (message == "") { return ""; }
+            if (string.IsNullOrEmpty(message))
+            {
+                return "";
+            }
             StringBuilder result = new StringBuilder();
             string[] lines = message.Split(Environment.NewLine);
             int maxWordLength = 0;
             for (int i = 0; i < lines.Length; i++)
             {
-                if (lines[i].Length > maxWordLength) { maxWordLength = lines[i].Length; }
+                if (lines[i].Length > maxWordLength)
+                {
+                    maxWordLength = lines[i].Length;
+                }
             }
             result.Append(ReturnHorisontalFrameLine(maxWordLength, padding));
             result.Append(ReturnContentLines(lines, maxWordLength, padding));

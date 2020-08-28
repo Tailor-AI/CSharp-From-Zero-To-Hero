@@ -12,10 +12,8 @@ namespace BootCamp.Chapter
     {
         static void Main(string[] args)
         {
-            string corruptFile = GetPathToWorkFolder();
-            corruptFile += string.Format(@"\Input\Balances.corrupted");
-            string cleanedFile = GetPathToWorkFolder();
-            cleanedFile += string.Format(@"\Input\BalancesClean.txt");
+            string corruptFile = GetPathToCorruptFile(GetPathToWorkFolder());
+            string cleanedFile = GetPathToCleanedFile(GetPathToWorkFolder());
             FileCleaner.Clean(corruptFile, cleanedFile);
             // - FindHighestBalanceEver
             Console.WriteLine(TextTable.Build(BalanceStats.FindHighestBalanceEver(FileCleaner.AccountArray), 3));
@@ -34,6 +32,14 @@ namespace BootCamp.Chapter
                 path = Directory.GetParent(path).ToString();
             }
             return path;
+        }
+        static string GetPathToCorruptFile(string pathToWorkFolder)
+        {
+            return (pathToWorkFolder + string.Format(@"\Input\Balances.corrupted"));
+        }
+        static string GetPathToCleanedFile(string pathToWorkFolder)
+        {
+            return (pathToWorkFolder + string.Format(@"\Input\BalancesClean.txt"));
         }
     }
 }

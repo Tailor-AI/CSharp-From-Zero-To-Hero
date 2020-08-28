@@ -11,8 +11,13 @@ namespace BootCamp.Chapter
         public static float[][] allBalances { get; set; }
         public static void ParsePeopleAndBalance(string[] peopleAndBalances)
         {
-            if(peopleAndBalances[0] == "") { return; }
+            if (string.IsNullOrEmpty(peopleAndBalances[0]))
+            {
+                return;
+            }
+
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+
             allNames = new string[peopleAndBalances.Length];
             allBalances = new float[peopleAndBalances.Length][];
             for (int i = 0; i < peopleAndBalances.Length; i++)
@@ -47,7 +52,11 @@ namespace BootCamp.Chapter
             CultureInfo culture = CultureInfo.CreateSpecificCulture("");
             culture.NumberFormat.CurrencyNegativePattern = 1;
             culture.NumberFormat.CurrencyGroupSeparator = "";
-            if (peopleAndBalances == null || peopleAndBalances.Length == 0) { return "N/A."; }
+
+            if (peopleAndBalances == null || peopleAndBalances.Length == 0)
+            {
+                return "N/A.";
+            }
             ParsePeopleAndBalance(peopleAndBalances);
             float highestBalance = GetHighestHistoricBalance();
             string[] names = GetPeopleOfHighestBalance(highestBalance);
@@ -99,7 +108,10 @@ namespace BootCamp.Chapter
             int numberOfElements = 0;
             foreach (var name in tempNames)
             {
-                if (name != "" && name != null) { numberOfElements++; }
+                if (!string.IsNullOrEmpty(name))
+                {
+                    numberOfElements++;
+                }
             }
             string[] trimmedArray = new string[numberOfElements];
             int index = 0;
@@ -118,7 +130,10 @@ namespace BootCamp.Chapter
         private static string GetConcatenatedString(string[] namesHighestBalance)
         {
             StringBuilder result = new StringBuilder();
-            if (namesHighestBalance == null || namesHighestBalance.Length == 0) { return ""; }
+            if (namesHighestBalance == null || namesHighestBalance.Length == 0)
+            {
+                return "";
+            }
             else if (namesHighestBalance.Length == 1) { return $"{namesHighestBalance[0]} "; }
             else
             {
@@ -140,10 +155,17 @@ namespace BootCamp.Chapter
             CultureInfo culture = CultureInfo.CreateSpecificCulture("");
             culture.NumberFormat.CurrencyNegativePattern = 1;
             culture.NumberFormat.CurrencyGroupSeparator = "";
-            if (peopleAndBalances == null || peopleAndBalances.Length == 0) { return "N/A."; }
+
+            if (peopleAndBalances == null || peopleAndBalances.Length == 0)
+            {
+                return "N/A.";
+            }
             ParsePeopleAndBalance(peopleAndBalances);
             float biggestLoss = GetBiggestLoss();
-            if (biggestLoss >= 0) { return "N/A."; }
+            if (biggestLoss >= 0)
+            {
+                return "N/A.";
+            }
             string name = GetNameOfBiggestLoss(biggestLoss);
             string formattedBalance = string.Format(culture, "{0:C0}", biggestLoss);
             return $"{name} lost the most money. {formattedBalance}.";
@@ -156,7 +178,10 @@ namespace BootCamp.Chapter
             for (int i = 0; i < allBalances.Length; i++)
             {
                 int index = 0;
-                if(allBalances[i].Length == 0) { continue; }
+                if(allBalances[i].Length == 0)
+                {
+                    continue;
+                }
                 while (index != allBalances[i].Length - 1)
                 {
                     if (allBalances[i][index + 1] - allBalances[i][index] == biggestLoss)
@@ -178,11 +203,17 @@ namespace BootCamp.Chapter
             {
                 float tempLoss = 0;
                 int index = 0;
-                if(allBalances[i].Length == 0) { continue; }
+                if(allBalances[i].Length == 0)
+                {
+                    continue;
+                }
                 while (index != allBalances[i].Length - 1)
                 {
                     tempLoss = allBalances[i][index + 1] - allBalances[i][index];
-                    if (tempLoss < biggestLoss) { biggestLoss = tempLoss; }
+                    if (tempLoss < biggestLoss)
+                    {
+                        biggestLoss = tempLoss;
+                    }
                     index++;
                 }
             }
@@ -197,13 +228,21 @@ namespace BootCamp.Chapter
             CultureInfo culture = CultureInfo.CreateSpecificCulture("");
             culture.NumberFormat.CurrencyNegativePattern = 1;
             culture.NumberFormat.CurrencyGroupSeparator = "";
-            if (peopleAndBalances == null || peopleAndBalances.Length == 0) { return "N/A."; }
+
+            if (peopleAndBalances == null || peopleAndBalances.Length == 0)
+            {
+                return "N/A.";
+            }
+
             ParsePeopleAndBalance(peopleAndBalances);
             float highestCurrentBalance = GetHighestCurrentBalance();
             string[] names = GetPeopleOfBalance(highestCurrentBalance);
             string namesStringResult = GetConcatenatedString(names);
             string formattedBalance = string.Format(culture, "{0:C0}", highestCurrentBalance);
-            if (names.Length > 1) { return $"{namesStringResult}are the richest people. {formattedBalance}."; }
+            if (names.Length > 1)
+            {
+                return $"{namesStringResult}are the richest people. {formattedBalance}.";
+            }
             else return $"{namesStringResult}is the richest person. {formattedBalance}.";
         }
 
@@ -214,7 +253,10 @@ namespace BootCamp.Chapter
             int result = 0;
             for (int i = 0; i < allBalances.Length; i++)
             {
-                if (allBalances[i].Length == 0) { continue; }
+                if (allBalances[i].Length == 0)
+                {
+                    continue;
+                }
                 if (allBalances[i][^1] == balance)
                 {
                     tempNames[result] = allNames[i];
@@ -230,8 +272,14 @@ namespace BootCamp.Chapter
             float highestCurrentBalance = allBalances[0][^1];
             for (int i = 0; i < allBalances.Length; i++)
             {
-                if(allBalances[i].Length == 0) { continue; }
-                if (allBalances[i][^1] > highestCurrentBalance) { highestCurrentBalance = allBalances[i][^1]; }
+                if(allBalances[i].Length == 0)
+                {
+                    continue;
+                }
+                if (allBalances[i][^1] > highestCurrentBalance)
+                {
+                    highestCurrentBalance = allBalances[i][^1];
+                }
             }
             return highestCurrentBalance;
         }
@@ -244,13 +292,20 @@ namespace BootCamp.Chapter
             CultureInfo culture = CultureInfo.CreateSpecificCulture("");
             culture.NumberFormat.CurrencyNegativePattern = 1;
             culture.NumberFormat.CurrencyGroupSeparator = "";
-            if (peopleAndBalances == null || peopleAndBalances.Length == 0) { return "N/A."; }
+
+            if (peopleAndBalances == null || peopleAndBalances.Length == 0)
+            {
+                return "N/A.";
+            }
             ParsePeopleAndBalance(peopleAndBalances);
             float lowestCurrentBalance = GetLowestCurrentBalance();
             string[] names = GetPeopleOfBalance(lowestCurrentBalance);
             string namesStringResult = GetConcatenatedString(names);
             string formattedBalance = string.Format(culture, "{0:C0}", lowestCurrentBalance);
-            if (names.Length > 1) { return $"{namesStringResult}have the least money. {formattedBalance}."; }
+            if (names.Length > 1)
+            {
+                return $"{namesStringResult}have the least money. {formattedBalance}.";
+            }
             else return $"{namesStringResult}has the least money. {formattedBalance}.";
         }
 
@@ -261,7 +316,10 @@ namespace BootCamp.Chapter
             for (int i = 0; i < allBalances.Length; i++)
             {
                 if (allBalances[i].Length == 0) { continue; }
-                if (allBalances[i][^1] < lowestCurrentBalance) { lowestCurrentBalance = allBalances[i][^1]; }
+                if (allBalances[i][^1] < lowestCurrentBalance)
+                {
+                    lowestCurrentBalance = allBalances[i][^1];
+                }
             }
             return lowestCurrentBalance;
         }
