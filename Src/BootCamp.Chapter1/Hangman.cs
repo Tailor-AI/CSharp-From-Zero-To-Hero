@@ -24,9 +24,13 @@ namespace BootCamp1.Chapter
         /// <returns>True if game was won or false if game was lost.</returns>
         public static bool Play(int lives, string wordsFile, int difficulty)
         {
-            if(lives < 1 || difficulty < 3)
+            if(lives < 1)
             {
-                throw new SystemException();
+                throw new InvalidPlayParameterExeption($"Number of lives is: {lives} and cannot be below 1.", new Exception());
+            }
+            if(difficulty < 3)
+            {
+                throw new InvalidPlayParameterExeption($"Difficulty is: {difficulty} and cannot be below 3.", new Exception());
             }
 
             var wordToGuess = WordsBank.PickRandomWord(@$"Words/{wordsFile}", difficulty);           
@@ -35,7 +39,6 @@ namespace BootCamp1.Chapter
             while (true)
             {
                 var playersGuess = GuessCharacter(lives);
-
                 bool isCharacterPresent = CheckForCharacter(wordToGuess, playersGuess, ref isVisible);
 
                 PrintKnownCharacters(wordToGuess, isVisible);
@@ -51,7 +54,6 @@ namespace BootCamp1.Chapter
                     Console.WriteLine($"The correct word was {wordToGuess}.");
                     return false;
                 }
-
                 else if (isVisible.All(x => x == true))
                 {
                     Console.WriteLine("Congratulations! You guessed the correct word!");
