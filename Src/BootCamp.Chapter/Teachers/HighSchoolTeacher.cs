@@ -5,7 +5,7 @@ namespace BootCamp.Chapter.Teachers
 {
     public class HighSchoolTeacher : ITeacher<ISubject>
     {
-        ISubject subject;
+        public readonly ISubject subject;
 
         public HighSchoolTeacher(ISubject _subject)
         {

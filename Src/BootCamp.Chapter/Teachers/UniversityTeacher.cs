@@ -5,7 +5,7 @@ namespace BootCamp.Chapter.Teachers
 {
     public class UniversityTeacher : ITeacher<ISubject>
     {
-        ISubject subject;
+        private readonly ISubject subject;
 
         public UniversityTeacher(ISubject _subject)
         {
